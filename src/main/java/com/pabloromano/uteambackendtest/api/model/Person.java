@@ -7,12 +7,14 @@ public class Person {
     private String firstName;
     private String lastName;
     private String birthdate;
-    private boolean hasInsurance;
+    private Boolean hasInsurance;
     private ArrayList<Movie> favouriteMovies;
 
     public final static int MAX_MOVIES = 3;
 
-    public Person(int id, String firstName, String lastName, String birthdate, boolean hasInsurance) {
+    public Person() {} // Agregado para que Jackson pueda deserializar correctamente al hacer POST
+
+    public Person(int id, String firstName, String lastName, String birthdate, Boolean hasInsurance) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,7 +23,7 @@ public class Person {
         this.favouriteMovies = new ArrayList<Movie>();
     }
 
-    public Person(int id, String firstName, String lastName, String birthdate, boolean hasInsurance, ArrayList<Movie> favouriteMovies) {
+    public Person(int id, String firstName, String lastName, String birthdate, Boolean hasInsurance, ArrayList<Movie> favouriteMovies) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +48,7 @@ public class Person {
         return birthdate;
     }
 
-    public boolean getHasInsurance() {
+    public Boolean getHasInsurance() {
         return hasInsurance;
     }
 
@@ -70,11 +72,15 @@ public class Person {
         this.birthdate = birthdate;
     }
 
-    public void setHasInsurance(boolean hasInsurance) {
+    public void setHasInsurance(Boolean hasInsurance) {
         this.hasInsurance = hasInsurance;
     }
 
     public void setFavouriteMovies(ArrayList<Movie> favouriteMovies) {
         this.favouriteMovies = favouriteMovies;
+    }
+
+    public String toString() {
+        return "Persona: { " + firstName + ", " + lastName + " }";
     }
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.pabloromano.uteambackendtest.api.comparator.ComparatorPersonName;
 import com.pabloromano.uteambackendtest.api.model.Movie;
 import com.pabloromano.uteambackendtest.api.model.Person;
 
@@ -27,11 +28,46 @@ public class PersonService {
 
         ArrayList<Person> personList = new ArrayList<Person>();
         Person person1 = new Person(1, "Juan", "Perez", "1990-12-12", true, movieList1);
-        Person person2 = new Person(2, "Pablo", "Lamberti", "1987-04-03", false, movieList2);
-        Person person3 = new Person(3, "Nombre", "Apellido", "1982-01-05", false);
-        personList.addAll(Arrays.asList(person1, person2, person3));
+        Person person2 = new Person(2, "Juan", "Dominguez", "1992-11-13", true);
+        Person person3 = new Person(3, "Pablo", "Lamberti", "1987-04-03", false, movieList2);
+        Person person4 = new Person(4, "Nombre", "Apellido", "1982-01-05", false);
+        personList.addAll(Arrays.asList(person1, person2, person3, person4));
 
         this.personList = personList;
+    }
+
+    public Person storePerson(Person person) {
+        this.personList.add(person);
+        return person;
+    }
+
+    public Person updatePerson(int id, Person person) {
+        Optional<Person> oPerson = this.findPersonById(id);
+        Person updatedPerson = (Person) oPerson.get();
+        if(person.getFirstName() != null) {
+            updatedPerson.setFirstName(person.getFirstName());
+        }
+        if(person.getLastName() != null) {
+            updatedPerson.setLastName(person.getLastName());
+        }
+        if(person.getBirthdate() != null) {
+            updatedPerson.setBirthdate(person.getBirthdate());
+        }
+        if(person.getHasInsurance() != null) {
+            updatedPerson.setHasInsurance(person.getHasInsurance());
+        }
+        if(person.getFavouriteMovies() != null) {
+            updatedPerson.setFavouriteMovies(person.getFavouriteMovies());
+        }
+        System.out.println(updatedPerson.toString());
+        this.personList.set(this.personList.indexOf(oPerson.get()), updatedPerson);
+        return updatedPerson;
+    }
+
+    public ArrayList<Person> deletePerson(int id) {
+        Optional<Person> oPerson = this.findPersonById(id);
+        this.personList.remove(oPerson.get());
+        return listOrderedPersonsByName();
     }
     
     public Optional<Person> findPersonById(int id) {
@@ -55,10 +91,17 @@ public class PersonService {
         return matchedPersonsList;
     }
 
-    public ArrayList<Person> listPersons() {
+    public ArrayList<Person> listOrderedPersonsByName() {
         ArrayList<Person> personList = new ArrayList<>();
         personList = this.personList;
-        return personList;
+        return orderPersonsByName(personList);
     }
     
+    public static ArrayList<Person> orderPersonsByName(ArrayList<Person> personArrayList) {
+        ArrayList<Person> orderedPersonList = personArrayList;
+
+        orderedPersonList.sort(new ComparatorPersonName());
+
+        return orderedPersonList;
+    }
 }
