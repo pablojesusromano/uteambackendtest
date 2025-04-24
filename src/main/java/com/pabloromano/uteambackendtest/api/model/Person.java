@@ -10,6 +10,8 @@ public class Person {
     private boolean hasInsurance;
     private ArrayList<Movie> favouriteMovies;
 
+    public final static int MAX_MOVIES = 3;
+
     public Person(int id, String firstName, String lastName, String birthdate, boolean hasInsurance) {
         this.id = id;
         this.firstName = firstName;

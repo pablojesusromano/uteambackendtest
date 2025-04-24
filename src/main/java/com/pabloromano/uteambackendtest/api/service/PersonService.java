@@ -35,14 +35,24 @@ public class PersonService {
     }
     
     public Optional<Person> findPersonById(int id) {
-        Optional<Person> optional = Optional.empty();
+        Optional<Person> oPerson = Optional.empty();
         for (Person person: personList) {
             if(id == person.getId()) {
-                optional = Optional.of(person);
-                return optional;
+                oPerson = Optional.of(person);
+                return oPerson;
             }
         }
-        return optional;
+        return oPerson;
+    }
+
+    public ArrayList<Person> findPersonByName(String name) {
+        ArrayList<Person> matchedPersonsList = new ArrayList<Person>();
+        for (Person person: personList) {
+            if(name.equals(person.getFirstName()) || name.equals(person.getLastName())) {
+                matchedPersonsList.add(person);
+            }
+        }
+        return matchedPersonsList;
     }
 
     public ArrayList<Person> listPersons() {
@@ -50,4 +60,5 @@ public class PersonService {
         personList = this.personList;
         return personList;
     }
+    
 }
