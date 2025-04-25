@@ -1,20 +1,12 @@
-package com.pabloromano.uteambackendtest.api.model;
+package com.pabloromano.uteambackendtest.api.dto;
 
-public class Movie {
-    private int id;
+public class MovieDto {
     private String title;
     private String genre;
 
-    public Movie() {}
-
-    public Movie(int id, String title, String genre) {
-        this.id = id;
+    public MovieDto(String title, String genre) {
         this.title = title;
         this.genre = genre;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getTitle() {
@@ -23,10 +15,6 @@ public class Movie {
 
     public String getGenre() {
         return genre;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setTitle(String title) {

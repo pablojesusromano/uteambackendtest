@@ -1,28 +1,27 @@
-package com.pabloromano.uteambackendtest.api.model;
+package com.pabloromano.uteambackendtest.api.dto;
 
 import java.util.ArrayList;
 
-public class Person {
+public class PersonDto {
     private int id;
     private String firstName;
     private String lastName;
     private String birthdate;
     private Boolean hasInsurance;
-    private ArrayList<Movie> favouriteMovies;
+    private ArrayList<MovieDto> favouriteMovies;
 
-    public final static int MAX_MOVIES = 3;
+    public PersonDto() {} // Agregado para que Jackson pueda deserializar correctamente al hacer POST
 
-    public Person(int id, String firstName, String lastName, String birthdate, Boolean hasInsurance) {
+    public PersonDto(int id, String firstName, String lastName, String birthdate, Boolean hasInsurance) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
         this.hasInsurance = hasInsurance;
-        this.favouriteMovies = new ArrayList<Movie>();
+        this.favouriteMovies = new ArrayList<MovieDto>();
     }
 
-    public Person(int id, String firstName, String lastName, String birthdate, Boolean hasInsurance,
-            ArrayList<Movie> favouriteMovies) {
+    public PersonDto(int id, String firstName, String lastName, String birthdate, Boolean hasInsurance, ArrayList<MovieDto> favouriteMovies) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,7 +50,7 @@ public class Person {
         return hasInsurance;
     }
 
-    public ArrayList<Movie> getFavouriteMovies() {
+    public ArrayList<MovieDto> getFavouriteMovies() {
         return favouriteMovies;
     }
 
@@ -75,16 +74,18 @@ public class Person {
         this.hasInsurance = hasInsurance;
     }
 
-    public void setFavouriteMovies(ArrayList<Movie> favouriteMovies) {
+    public void setFavouriteMovies(ArrayList<MovieDto> favouriteMovies) {
         this.favouriteMovies = favouriteMovies;
     }
 
     public String toString() {
         String message = "Persona: { " + firstName + ", " + lastName + ", ";
-        for (Movie movie : favouriteMovies) {
+        message += "[ ";
+        for (MovieDto movie : favouriteMovies) {
+            message += "{ ";
             String movieTitle = movie.getTitle();
-            message += movieTitle;
+            message += movieTitle + " } ";
         }
-        return message + " }";
+        return message + "]}";
     }
 }
